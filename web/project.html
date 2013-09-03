@@ -64,9 +64,10 @@
               <div class="span10">
                 <hr>
                 <a href="#overview">Project Overview</a>&nbsp;|&nbsp;
+                <a href="#workload">Genomics Workloads</a>&nbsp;|&nbsp;
                 <a href="#areas">Areas</a>&nbsp;|&nbsp;
                 <a href="#resources">Resources</a>&nbsp;|&nbsp;
-                <a href="#schedule">Schedule</a>&nbsp;|&nbsp;
+                <a href="#schedule">Schedule</a>
                 <hr>
               </div>
             </div>
@@ -159,7 +160,7 @@ create table Alignments (     create table Variants (
   extra     text              
 );              
 </pre>
-            <h3>Genomics workloads</h3>
+            <h3><a name="workload">Genomics workloads</a></h3>
             We'd like our genomics database and pipeline to support the following functionality. We anticipate that much of this functionality can be provided by existing tools or require modifications to existing tools. We strongly encourage you to make good use of such tools rather than developing your own algorithms from scratch except where necessary.
             <br><br>
 
@@ -218,7 +219,7 @@ create table Alignments (     create table Variants (
 
             <span class="label label-default">Workflow and tools:</span>
             <ul>
-              <li>Use Crossbow and GATK tools to extract position-wise variants from aligned sequences.</li>
+              <li>Use the Crossbow and GATK tools to extract position-wise variants from aligned sequences.</li>
               <li>Develop analyses of variant occurrences, correlations and higher-order statistics.</li>
               <li>Integrate with annotations for alignment provenance and uncertainty.</li>
             </ul>
