@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CS 600.615</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">    
+      html, body { height: 100%; }
+
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -45px;
+      }
+
+      #push,
+      #footer {
+        height: 30px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+        padding-top: 15px;
+      }
+
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="wrap">
+      <div class="container" style="padding-top: 45px">
+
+        <div class="row-fluid">
+          <div class="span8">
+            <h1>BDSLSS: Project Page</h1>
+          
+            <div class="row-fluid" style="padding-top:40px">
+              <div class="span6">
+                <p>Course instructor: <a href="http://cs.jhu.edu/~yanif">Yanif Ahmad</a>.<br>
+                  Class schedule: MW 12-1.15pm, Maryland 109.<br>
+                </p>
+              </div>
+              <div class="span6">
+                  Office hours:<br>
+                  W 1.15-2.30pm, Shaffer 200A.
+              </div>
+            </div>
+
+            <!-- Sections -->
+            <div class="row-fluid">
+              <div class="span10">
+                <hr>
+                <a href="#overview">Project Overview</a>&nbsp;|&nbsp;
+                <a href="#areas">Areas</a>&nbsp;|&nbsp;
+                <a href="#resources">Resources</a>&nbsp;|&nbsp;
+                <a href="#schedule">Schedule</a>&nbsp;|&nbsp;
+                <hr>
+              </div>
+            </div>
+
+          </div>
+          <div class="span2"><img src="images/jhu-crest.jpg"></div>
+        </div>
+
+
+        <div class="row-fluid">
+          <div class="span8">
+
+            <h3><a name="desc">Project Overview</a></h3>
+
+            CS 600.615 aims to provide its students with practical experience in working with cutting-edge big data tools, large datasets and algorithmic challenges when processing data at scale through our class project.
+
+            This year, we challenge our students to develop a public genomics database and platform using the wide range of open source big data tools, frameworks and libraries available.
+
+            This may include tools such as Hadoop, GraphLab, Spark, Postgres/Greenplum, and analytics frameworks and libraries such as Apache Mahout, WEKA, Madlib, or R.
+
+            We plan to run this class project as a semester-long prototyping and proof-of-concept development phase, much like a small startup at its inception.
+
+            We will release all of the source code developed on GitHub, and establish a project website and portal.
+            <br><br>
+
+            While there are a wide range of bioinformatics tools and pipelines available online through resources such as 
+            the <a href="http://galaxyproject.org/">Galaxy Project</a>, 
+            the <a href="http://www.broadinstitute.org/gatk/">Genome Analysis Toolkit</a> 
+            <span class="label label-info">TODO: more examples</span>
+            , our aim is to develop a cohesive, vertically-integrated pipeline that exemplifies the end-to-end processing and analysis of genomics data, from short reads obtained from sequencing machines, to whole genome studies.
+
+            We are also interested in coupling both DNA and protein primary sequence information to three-dimensional tertiary structure through homology methods, leveraging ongoing work in the Molecular Dynamics Database project.
+            
+            The following diagram provides a high-level architectural overview of the framework that we envision.
+            <span class="label label-info">TODO: workflow diagram</span>
+            <br><br>
+
+            In the first two weeks of the semester, we will subdivide the project components amongst student groups based on interests and prior background on systems and analysis.
+
+            Student groups will then be asked to develop a more detailed design and implementation plan for their component, including their approach to integrating their work with other interacting components in the system.
+
+            This will require engaging with other project groups, and defining concrete interfaces and requirements across components. 
+
+            By defining these points of interaction early in the design phase (although naturally we expect APIs and data formats to be refined as the project progresses), teams can then work with a high degree of independence for the bulk of the semester, with periodic rather than daily collaboration with other groups.
+            <br><br>
+
+            In the remainder of this page, we describe a simple toolchain to get us started with ingesting sequence data into a relational database. Course students should try to set this up for themselves as a small testing and sandbox environment for running sequence analysis. Students interested in designing the storage and architecture of our public database will refine this to meet the demands of scalability, and to use the best set of tools available for the scope of the project.
+
+
+            <h3>Dataset description</h3>
+            We will provide as inputs a dataset of short reads as obtained from high-throughput DNA sequencers. The file format used is <a href="http://en.wikipedia.org/wiki/FASTQ_format">FASTQ</a>. FASTQ files are structured in blocks of 4 lines, containing both sequence information and metadata. Here is a snippet to illustrate its contents:<br><br>
+
+<pre>
+@r1
+NAACGTCAGCGGAAGCACCACTATCTGGCGATCAAAAGGATGGTCATCGGTCACGGTGACAGTACGGGTACCTGACGGCCAGTCCACACTGCTTTCACGCTGGCGCGGNAAAGCCGCGCTCGCCGCCTNTACNATGTCCCCGACGATTTTTTCCGCCCTCAGCGTACCGTTTATCGTACAGTTTTCAGCTATCGTCAC
++
+&?$F&9AC8H49@5<*>=E;2/G+;9?&8D.;E!2:0B/)++#F-><E,-/&F:&/#B=*'C?@$0!+#1?.ABC?:-?9GA?,11.2>3$&@-'6;!6@D?&#*E:C#9-4&8?"))H>H9-->((E99;:@::1=1-!+$@$8+#@%(<B,+%6!>@0G*D5A'(>9AC<;@01:7@:@0D&D=@:>7"1)D+9+B
+</pre>
+
+            A small 100MB sample of short reads can be found here: <span class="label label-info">TODO URL</span>
+
+            <h3>Schema design</h3>
+            The following database schema is a suggestion for a starting point for
+            the design of a genomics database. This should be extended with further
+            metadata, views (dervied tables), and indexes as needed to support our
+            query workload (see below).<br><br>
+
+<pre>
+create table Reads (          create table Reference (      
+  read_id    serial,            ref_id     bigint,          
+  read_name  text,              ref_name   text,            
+  seq1       text,              ref_data   text             
+  quality1   text,              seg_id     bigint,          
+  seq2       text,              seg_data   bit(8192)
+  quality2   text             );
+);                            
+
+create table Alignments (     create table Variants (
+  read_name text,               ref_name      text,
+  flag      int,                ref_pos       int,
+  ref_name  text,               ext_id        text,
+  ref_pos   int,                ref_allele    text,
+  mapq      int,                alt_allele    text,
+  cigar     text,               quality       float8,
+  rnext     text,               var_filter    text,
+  pnext     int,                var_info      text,
+  tlen      int,                format        text,
+  seq       text,               genotype      text
+  qual      text,             );
+  extra     text              
+);              
+</pre>
+            <h3>Genomics workloads</h3>
+            We'd like our genomics database and pipeline to support the following functionality. We anticipate that much of this functionality can be provided by existing tools or require modifications to existing tools. We strongly encourage you to make good use of such tools rather than developing your own algorithms from scratch except where necessary.
+            <br><br>
+
+            <h5>Sequence alignment, with a focus on pairwise alignments.</h5>
+            Sequence alignment can be considered the starting point and basic primitive in genomics applications.
+
+            The basic challenge here is to reconstruct the nucleotide sequence of a long strand of DNA from a series of reads performed by a high-throughput sequencing machine, through the process of <em>alignment</em>.
+
+            A survey paper of genomics tools (included on our reading list <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2943993/">here</a>) provides an overview of the classes of tools available.
+            <br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Pairwise on short reads, with Bowtie and SNAP</li>
+              <li>Apply partial indexing techniques (i.e., lazy index construction) to the 1000 genomes dataset.</li>
+              <li>Extend Bowtie or SNAP to implement a distributed, pipelined or <em>streaming</em> aligner, and integrate with variant discovery for accelerated variant analysis.</li>
+              <li><span class="label label-info">Advanced:</span> Design and implement a domain-specific language for describing alignment <em>strategies</em>, to flexibly control the pairwise alignment process.</li>
+            </ul>
+            <br>
+
+            <h5>Sequence annotations, for data provenance and uncertainty analysis</h5>
+            One of the key challenges in any big data analysis is the ability to debug and introspect on how an analysis arrived at its conclusions. For sequence alignment, this includes tracking position-wise metadata and annotations (e.g., experimental parameters and sequencer configuration).
+
+            Furthermore, given the chemical nature of sequencing methods, read quality and subsequently alignment noise and uncertainty play a major role in determining the accuracy and utility of an aligner's outputs.
+
+            This task involves designing the metadata representation, and quantifying uncertainty for alignments and variant analysis, ultimately using this information for experiment control that determines the next set of sequencing tasks.
+            <br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Attach provenance annotations and uncertainty (e.g., Phred quality scores) to alignments.</li>
+              <li>Develop first-class querying capabilities for annotations for use in other components.</li>
+              <li>Integrate with variant and differential gene expression analyses to establish quality metrics.</li>
+              <li><span class="label label-info">Advanced:</span> Applications of probabilistic DBMS methods, using C-Tables for sequences.</li>
+            </ul>
+            <br>
+
+            <h5>Variant discovery and statistics</h5>
+            Genetic variants, including SNP and mutations, concern differences in the nucleotide sequence across common positions in multiple alignments.
+
+            These variants can be discovered in the presence of a high-degree of coverage during sequencing, that is where multiple reads overlap on an aligned position.
+
+            For example, suppose we had the following alignment of four sequence:
+
+<pre>
+        ATTCG
+       GTTTA
+     CTGTT
+    ACTGA
+        ^ variant position
+</pre>
+            The position denoted by the caret symbol above indicates an aligned position where the reads correspond to two different nucleotides (<code>A</code> and <code>T</code>).
+
+            Bioinformatics queries are interested in discovering, extracting and understanding the distribution of variants and mutations in sequence datasets. Furthermore, identifying these variants must address issues of noise and uncertainty when considering sequencing quality as obtained from a FASTQ file.
+            <br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Use Crossbow and GATK tools to extract position-wise variants from aligned sequences.</li>
+              <li>Develop analyses of variant occurrences, correlations and higher-order statistics.</li>
+              <li>Integrate with annotations for alignment provenance and uncertainty.</li>
+            </ul>
+            <br>
+
+            <h5>RNA sequencing and differential gene expression</h5>
+            As part of gene expression, the transcription process produces RNA molecules from DNA sequences. 
+
+            Bioinformatics applications are interested in differential gene expression, to understand the production and regulation of proteins and their role in synthesizing cells.
+            
+            This task involves the analysis of gene expression mechanisms, such as RNA sequence read counts as part of  differential gene expression analysis.
+            <br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Use Myrna to perform differential gene expression analysis.</li>
+              <li><span class="label label-info">TODO: more concrete subtasks here.</span></li>
+            </ul>
+            <br>
+
+            <h5>Protein structure construction of variants and mutations by homology modeling</h5>
+            While the primary structure of DNA, RNA and proteins provide coarse-grained information on biological function, three-dimensional protein structures and their dynamics can provide more detailed insight into the biophysics of protein molecules and their interaction. However, these are vastly more intensive calculations and must be used selectively in light of limited hardware.
+            <br><br>
+            NMR and X-ray crystallography of biomolecules have revealed the three-dimensional structure of known protein sequences. Coupled with the use of homology modeling techniques and software, we can develop variations of the known geometric structure of these sequences, and then apply molecular dynamics tools to simulate protein motions and trajectories. The motions of these variants can be compared to identify the effect of variants on biological structure and function.<br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Use Rosetta to construct protein structure predictions for variants of the PTEN-PI3K protein (the Ligand Design Database stack may be helpful, contact Prof. Ahmad or Prof. Woolf).</li>
+              <li>Use the Molecular Dynamics Database software stack to simulate the dynamics of variant proteins (contact Prof. Ahmad or Prof. Woolf).</li>
+              <li><span class="label label-info">TODO: any other systems or tasks?.</span></li>
+            </ul>
+            <br>
+
+            <h5>Data-driven sequencer control</h5>
+            Develop a control loop to determine which DNA and RNA samples to sequence based on the analyses performed above. This should leverage the provenance and uncertainty information on variants and gene expression, as well as the free energy analyses and protein structure and function for the associated variant or mutation.
+            <br><br>
+
+            <span class="label label-default">Workflow and tools:</span>
+            <ul>
+              <li>Develop a decision and control algorithm that selects regions of a genome to resequence.</li>
+              <li>Develop a human-in-the-loop visualization and interface to interact with the control process.</li>
+            </ul>
+
+            <br>
+
+            <!--
+            <h4>Extended workload</h4>
+
+            The above computations represents our primary bioinformatics interests. Depending on the number of student groups and their progress during the semester, other ideas for useful application functionality include:
+
+            <h5>Multiple sequence alignment</h5>
+            <ul>
+              <li></li>
+              <li></li>
+            </ul>
+
+            <h5>Sequence assembly</h5>
+            <ul>
+              <li>MIRA assembler: http://mira-assembler.sourceforge.net/docs/DefinitiveGuideToMIRA.pdf</li>
+              <li>Ray: simultaneous assembly of reads from a mix of high-throughput sequencing technologies.<br>
+                  Journal of Computational Biology. November 2010, 17(11): 1519-1533.</li>
+            </ul>
+
+            <h5>Whole genome analyses</h5>
+            <ul>
+              <li>Whole genome association studies</li>
+              <li></li>
+            </ul>
+            -->
+
+
+            <!--
+              -- Project areas
+              -->
+            <h3><a name="areas">Project areas</a></h3>
+
+            <h5>Data representation and storage</h5>
+            <ul>
+              <li>Data retrieval and ingestion</li>
+              <li>Indexing</li>
+              <li>Data placement</li>
+            </ul>
+
+            <h5>Architecture and scalability</h5>
+            <ul>
+              <li>Workflow design and deployment</li>
+              <li>Resilience</li>
+              <li>Experimentation and benchmarking</li>
+            </ul>
+
+            <h5>Analytics (algos, data extraction/cleaning/curation)</h5>
+            <ul>
+              <li>Algorithm selection</li>
+              <li>Algorithm parallelization</li>
+              <li>Experimentation + benchmarking</li>
+            </ul>
+
+            <h5>Usability/web/frontend (usability/visualization)</h5>
+            <ul>
+              <li>API design</li>
+              <li>Data curation</li>
+              <li>Workload and benchmark design</li>
+              <li>Visualization</li>
+            </ul>
+
+
+            <!--
+              -- Resources
+              -->
+            <h3><a name="resources">Resources</a></h3>
+            We will make the following small cluster available for the project. If more compute time is required, we will explore further options such as the HHPC cluster, the IDIES Data-Scope system, and cloud computing services such as Amazon's EC2.
+
+            <h5>Hardware:</h5>
+            5 x Dell R410 servers, each with a specification of 8 cores, 32Gb RAM, ~256GB-1TB storage.<br>
+
+            1 x Dell R510 networked file server w/ up to 15TB accessible across all machines.<br>
+
+            1 x GPU server with 4 x Nvidia GTX 580 and 4 x Nvidia GTX 480 cards.
+
+            <h5>Software:</h5>
+            <ul>
+            <li>Database software (Greenplum, Postgres, Oracle)</li>
+            <li>Distributed file systems (HDFS)</li>
+            <li>Parallel processing frameworks (Hadoop, GraphLab, Spark, etc.)</li>
+            <li>Virtualization software (VirtualBox)</li>
+            </ul>
+
+            We're happy for you to install any open-source software on these machines. Note that a lot of commercial software is also available under non-commercial usage licensing (e.g., Oracle Database 11RG, etc). Please let the course instructor know if any software requires root access for installation, and we will work with you to set this up.<br>
+
+            <h3><a name="schedule">Schedule</a></h3>
+
+            <table>
+            <tr>
+              <td width="100"><b>Week 1-2</b></td>
+              <td>Sign up for project area.</td>
+            </tr>
+
+            <tr>
+              <td><b>Week 2-3</b></td>
+              <td>Meet with Prof. Ahmad to discuss design and implementation plan.</td>
+            </tr>
+
+            <tr>
+              <td><b>By 9/20/13</b></td>
+              <td>Finalize and submit a design document.</td>
+            </tr>
+
+            <tr>
+              <td><b>Week 8</b></td>
+              <td>Mid-semester project demonstrations.</td>
+            </tr>
+
+            <tr>
+              <td><b>Weeks 12-13</b></td>
+              <td>Integration with other project components.</td>
+            </tr>
+
+            <tr>
+              <td><b>Week 14</b></td>
+              <td>Final demonstration of project components to select JHU and JHMI faculty.</td>
+            </tr>
+            </table>
+            <br><br>
+
+          </div>
+        </div>
+
+      </div>
+      <br>
+      <div id="push"></div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; Yanif Ahmad, 2013.</p>
+      </div>
+    </div>
+
+
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CS 600.615</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">    
+      html, body { height: 100%; }
+
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -45px;
+      }
+
+      #push,
+      #footer {
+        height: 30px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+        padding-top: 15px;
+      }
+
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="wrap">
+      <div class="container" style="padding-top: 45px">
+
+        <div class="row-fluid">
+          <div class="span8">
+            <h1>Big Data, Small Languages, Scalable Systems</h1>
+          
+            <div class="row-fluid" style="padding-top:40px">
+              <div class="span6">
+                <p>Course instructor: <a href="http://cs.jhu.edu/~yanif">Yanif Ahmad</a>.<br>
+                  Class schedule: MW 12-1.15pm, Maryland 109.<br>
+                </p>
+              </div>
+              <div class="span6">
+                  Office hours:<br>
+                  W 1.15-2.30pm, Shaffer 200A.
+              </div>
+            </div>
+          </div>
+          <div class="span2"><img src="images/jhu-crest.jpg"></div>
+        </div>
+
+        <!-- Sections -->
+        <div class="row-fluid">
+          <div class="span10">
+            <hr>
+            <a href="#desc">Description</a>&nbsp;|&nbsp;
+            <a href="#org">Organization</a>&nbsp;|&nbsp;
+            <a href="#syllabus">Syllabus</a>&nbsp;|&nbsp;
+            <a href="#schedule">Schedule</a>&nbsp;|&nbsp;
+            <a href="#material">Course materials</a>&nbsp;|&nbsp;
+            <a href="#signup">Sign-up form</a>
+            <hr>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="span8">
+
+            <h3><a name="desc">Course Description</a></h3>
+
+            Big Data systems and analyses are enabling computer scientists to have an
+            unprecedented impact on a wide variety of science, healthcare, economic and
+            humanities applications.<br>
+
+            By making datasets and their analyses the center of focus, big data principles
+            and methods empowers a data-driven dialogue with domain experts, supported by
+            powerful tools, abstractions and computing capabilities to collect, process,
+            visualize and explore data.<br><br>
+
+            This class provides a semester-long experiential learning opportunity on select big data
+            systems and analyses, alongside an end-to-end application of these tools
+            and methods on a concrete scientific dataset.
+            This year, our application of choice is gene sequence analysis, with an aim of
+            developing a public open science database as the culmination of student projects.<br><br>
+
+            CS 600.615 is structured in three parts.
+            First, we study the abstractions and systems design principles behind four
+            popular big data processing frameworks (Hadoop, Dremel/Impala, GraphLab, Spark),
+            including how these design principles facilitates their scalability.
+            Next, the course syllabus covers an investigation of common workloads and use cases 
+            of these systems in both industrial and academic applications.
+            These workloads are typically analytical in nature, and the course will then
+            expose students to the scalable implementation of statistics and machine learning
+            methods on these frameworks.
+
+            Finally, students will apply the skills they have gained in developing an analysis
+            stack for our science dataset through a semester-long course project.<br><br>
+
+            CS 600.615 is a discussion- and project-oriented seminar course. Its format and
+            workload includes weekly readings of academic conference papers, student presentations
+            and in-class discussion on the assigned material, two short paper writing assignments,
+            and a substantial project component.
+            Students work in small groups of 2-3 on all course activities, including presentations,
+            short papers and projects.
+
+            This year, the course project will be structured as a concerted, class-wide effort to
+            produce a tangible data and software artifact. Student groups may choose to work in one
+            of three areas (see the Organization section), and will integrate their efforts into a
+            single framework to be released by the semester's end.<br><br>
+
+            Area: Systems.<br>
+            Prereq: CS 600.315/415 or equivalent.<br><br>
+
+            <h3><a name="org">Organization</a></h3>
+            This course has a discussion-oriented format to introduce students to broader techniques
+            and applications of data management, building on their existing background and experiences
+            with data management tools. Students will read the assigned material prior to the week's
+            classes as preparation for engaging in an in-class discussion to be lead by a student
+            presenter.
+            Students are expected to pick one topic area and present the two papers chosen for that
+            area in two 50 minute lectures for Wednesday and Friday class.
+            To get the most out of the material, my suggestion is that presentations should be done
+            in the style of tutorials at conferences, that is they should include both introductory
+            material on the topic and summarize the contributions of the assigned papers on the topic,
+            rather than purely focus on the papers.
+            Given 75 minute lecture slots, the remaining 25 minutes will be a class discussion and
+            follow-up material by the instructor linking the week's materials to the remaining topics
+            in the syllabus. 
+            <br><br>
+            
+            For homework assignments, students will write two short papers (3-6 pages) on topics
+            chosen by the instructor based on the areas covered in the course. These topics will
+            either be a brief literature survey, a methods or systems comparison, or an experiment
+            and benchmarking oriented topic. We'll announce the topics shortly as the course
+            gets underway.<br><br>
+
+            This year, the course project will aim at aggregating group projects to produce
+            an open genomics database. 
+
+            This database will be deployed onto cluster resources available in the Data Management
+            Systems Lab, and IDIES.
+
+            We've divided the set of tasks involved in this effort into three areas (see below),
+            and included a list of topics in each area on the <b><a href="project.html">project page</a></b>.
+            Students should form groups of 2-3, and register their groups on our
+            <b><a href="https://docs.google.com/forms/d/1QCBcjyvXtBGkODMU1c47-D7hNXdv05CxhFJqRNXlg3k/viewform">sign-up form</a></b> by September 18, 2013.
+            Groups should indicate two project area preferences based on interests.
+
+            In addition to the main thrust of their individual topic, project groups will also be
+            required to interact and integrate their efforts with other groups during the semester
+            as part of a class-wide effort.
+
+            We will conduct an end-of-semester, end-to-end demonstration of the genomics database
+            during the last week of class to genomics researchers on the JHU Homewood and School of
+            Medicine campuses.<br><br>
+            
+            <h3>Grading</h3>
+            50% Project<br>
+            25% Short papers<br>
+            25% Presentation and discussion lead<br><br>
+
+
+            <h3><a name="syllabus">Syllabus</a></h3>
+            <table>
+              <tr>
+                <td width="50"><u>Week</u></td>
+                <td><u>Topic</u></td>
+              </tr>
+
+              <tr>
+                <td>1.</td>
+                <td>Course introduction and organization.</td>
+              </tr>
+
+              <tr>
+                <td>2.</td>
+                <td>Big Data Systems introduction (Hadoop).</td>
+              </tr>
+
+              <tr>
+                <td>3.</td>
+                <td>Interactive data exploration (Dremel/Impala).</td>
+              </tr>
+
+              <tr>
+                <td>4.</td>
+                <td>Scalable analysis and introductory machine learning on Hadoop.</td>
+              </tr>
+
+              <tr>
+                <td>5.</td>
+                <td>Applications, part i: introduction to sequence analysis.</td>
+              </tr>
+
+              <tr>
+                <td>6.</td>
+                <td>Analytics workloads in large web companies.</td>
+              </tr>
+
+              <tr>
+                <td>7.</td>
+                <td>Graph data processing (GraphLab).</td>
+              </tr>
+
+              <tr>
+                <td>8.</td>
+                <td>Main-memory and resilient processing (Spark).</td>
+              </tr>
+
+              <tr>
+                <td>9.</td>
+                <td>Mid-semester demonstrations.</td>
+              </tr>
+
+              <tr>
+                <td>10.</td>
+                <td>Distributed transactional storage.</td>
+              </tr>
+
+              <tr>
+                <td>11.</td>
+                <td>Applications part ii: advanced sequence analysis.</td>
+              </tr>
+
+              <tr>
+                <td>12.</td>
+                <td>Introduction to scalable convex optimization.</td>
+              </tr>
+
+              <tr>
+                <td>13.</td>
+                <td>Parallel and randomized matrix algorithms.</td>
+              </tr>
+
+              <!--
+              <tr>
+                <td>13.</td>
+                <td>Datacenter design and architecture.</td>
+              </tr>
+              -->
+
+              <tr>
+                <td>14.</td>
+                <td>Final project demonstrations.</td>
+              </tr>
+
+            </table>
+
+            <h3><a name="schedule">Schedule</a></h3>
+
+            Remainder to be announced shortly following student sign-up.
+
+            <h3><a name="material">Course materials</a></h3>
+            <table width="760">
+              <tr>
+                <td width="50"><u>Week</u></td>
+                <td><u>Materials</u></td>
+              </tr>
+
+              <tr>
+                <td valign="top">2.</td>
+                <td>
+                  i. MapReduce: a flexible data processing tool. Commun. ACM 53(1): 72-77 (2010)
+                  <a href="http://dx.doi.org/10.1145/1629175.1629198">[paper]</a><br>
+
+                  ii. Yahoo! Hadoop Tutorial <a href="http://developer.yahoo.com/hadoop/tutorial/index.html">http://developer.yahoo.com/hadoop/tutorial/index.html</a><br>
+
+                  iii. MapReduce and parallel DBMSs: friends or foes? Commun. ACM 53(1): 64-71 (2010)
+                  <a href="http://dx.doi.org/10.1145/1629175.1629197">[paper]</a><br><br>
+
+                  <b>Additional reading</b><br>
+                  Mining of Massive Datasets. Chapter 2.
+                  <a href="http://infolab.stanford.edu/~ullman/mmds.html">[link]</a><br>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">3.</td>
+                <td>
+                  i. Dremel: interactive analysis of web-scale datasets. Commun. ACM 54(6): 114-123 (2011)
+                  <a href="http://research.google.com/pubs/pub37217.html">[paper]</a><br>
+
+                  ii. The Vertica Analytic Database: C-Store 7 Years Later. PVLDB 5(12): 1790-1801 (2012)
+                  <a href="http://vldb.org/pvldb/vol5/p1790_andrewlamb_vldb2012.pdf">[paper]</a><br><br>
+
+                  <b>Additional reading:</b><br>
+                  Column-Oriented Database Systems. VLDB 2009 tutorial.
+                  <a href="http://nms.csail.mit.edu/~stavros/pubs/tutorial2009-column_stores.pdf">[slides]</a><br>
+
+                  Apache Drill documentation: <a href="http://incubator.apache.org/drill/">http://incubator.apache.org/drill/</a><br>
+
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">4.</td>
+                <td>
+                  i. Map-Reduce for Machine Learning on Multicore. NIPS 2006: 281-288
+                  <a href="http://www.cs.stanford.edu/people/ang//papers/nips06-mapreducemulticore.pdf">[paper]</a><br>
+                  ii. AllReduce
+                  <a href="http://mpitutorial.com/mpi-reduce-and-allreduce/">[MPI reference]</a>
+                  <a href="http://cilvr.cs.nyu.edu/diglib/lsml/lecture04-allreduce.pdf">[slides]</a>
+                  <a href="http://hunch.net/?p=2094">[article]</a><br><br>
+
+                  <b>Additional reading</b><br>
+                  Apache Mahout documentation: <a href="http://mahout.apache.org/">[link]</a><br>
+
+                  WEKA Data Mining Library <a href="http://www.cs.waikato.ac.nz/ml/weka/">[link]</a>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">5.</td>
+                <td>
+                  i. A survey of sequence alignment algorithms for next-generation sequencing.<br>
+                  Briefings in Bioinformatics. September 2010. 11(5): 473–483.
+                  <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2943993/">[paper]</a><br>
+                  
+                  ii. Faster and More Accurate Sequence Alignment with SNAP. arXiv:1111.5572v1, November 2011.<br>
+                  <a href="http://arxiv.org/abs/1111.5572">[tech report]</a><a href="http://snap.cs.berkeley.edu/">[project page]</a><a href="http://www.eecs.berkeley.edu/~kcurtis/ucsc_dec16.pdf">[slides]</a><br>
+                  
+                  iii. Assembly algorithms for next-generation sequencing data.<br>
+                  Genomics. Volume 95, Issue 6, June 2010, Pages 315–327
+                  <a href="http://www.sciencedirect.com/science/article/pii/S0888754310000492">[paper]</a>
+                  <br><br>
+
+                  <b>Additional reading</b><br>
+                  Distributed Pipeline for Genomic Variant Calling. NIPS Big Learning Workshop 2012.
+                  <a href="http://biglearn.org/2012/files/papers/biglearning2012_submission_23.pdf">[paper]</a><br>
+
+                  Statistical Inference for Big Data Problems in Molecular Biophysics. NIPS Big Learning 2012.
+                  <a href="http://biglearn.org/2012/files/papers/biglearning2012_submission_14.pdf">[paper]</a>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">6.</td>
+                <td>
+                  i. Interactive Analytical Processing in Big Data Systems:<br>
+                  A Cross-Industry Study of MapReduce Workloads. PVLDB 5(12): 1802-1813 (2012)
+                  <a href="http://vldb.org/pvldb/vol5/p1802_yanpeichen_vldb2012.pdf">[paper]</a><br>
+
+                  ii. BigBench: towards an industry standard benchmark for big data analytics.<br>
+                  SIGMOD 2013: 1197-1208
+                  <a href="http://dx.doi.org/10.1145/2463676.2463712">[paper]</a><br><br>
+                  
+                  <b>Additional reading</b><br>
+                  On brewing fresh espresso: LinkedIn's distributed data serving platform. SIGMOD 2013: 1135-1146
+                  <a href="http://dx.doi.org/10.1145/2463676.2465298">[paper]</a><br>
+
+                  WOO: A Scalable and Multi-tenant Platform for Continuous Knowledge Base Synthesis. VLDB 2013.<br>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">7.</td>
+                <td>
+                  i. GBase: an efficient analysis platform for large graphs. VLDB J. 21(5): 637-650 (2012)
+                  <a href="http://www.cs.cmu.edu/~ukang/papers/GbaseVLDBJ2012.pdf">[paper]</a><br>
+                  
+                  ii. Distributed GraphLab: A Framework for Machine Learning in the Cloud. PVLDB 5(8): 716-727 (2012)
+                  <a href="http://vldb.org/pvldb/vol5/p716_yuchenglow_vldb2012.pdf">[paper]</a><br><br>
+                  
+                  <b>Additional Reading:</b><br>
+                  GraphLab: A New Framework For Parallel Machine Learning. UAI 2010: 340-349
+                  <a href="http://arxiv.org/abs/1006.4990">[paper]</a><br>
+                  
+                  PEGASUS: A Peta-Scale Graph Mining System. ICDM 2009: 229-238
+                  <a href="http://www.cs.cmu.edu/~ukang/papers/PegasusKAIS.pdf">[paper]</a><br>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">8.</td>
+                <td>
+                  Mid-semester project demonstrations. No readings.
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">9.</td>
+                <td>
+                  i.a. Resilient Distributed Datasets: A Fault-Tolerant Abstraction for In-Memory Cluster Computing.<br>
+                  NSDI 2012
+                  <a href="http://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf">[paper]</a><br>
+                  
+                  i.b. Shark: SQL and rich analytics at scale. SIGMOD 2013: 13-24
+                  <a href="http://www.cs.berkeley.edu/~matei/papers/2013/sigmod_shark.pdf">[paper]</a><br>
+                  
+                  iii. M3R: Increased performance for in-memory Hadoop jobs. PVLDB 5(12): 1736-1747 (2012)
+                  <a href="http://vldb.org/pvldb/vol5/p1736_avrahamshinnar_vldb2012.pdf">[paper]</a><br>
+                  
+                  iv. MillWheel: Fault-Tolerant Stream Processing at Internet Scale. VLDB 2013.
+                  <a href="http://research.google.com/pubs/pub41378.html">[paper]</a><br>                  
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">10.</td>
+                <td>
+                  i. Spanner: Google's Globally Distributed Database.
+                  <a href="http://research.google.com/archive/spanner.html">[paper]</a><br>
+
+                  ii. F1: A Distributed SQL Database That Scales
+                  <a href="http://research.google.com/pubs/pub41344.html">[paper]</a><br>
+
+                  iii. Workload Analysis of a Large-Scale Key-Value Store
+                  <a href="https://www.facebook.com/publications/374961905908605">[paper]</a><br>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">11.</td>
+                <td>
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">12.</td>
+                <td>
+                  i. Introduction to Convex Optimization for Machine Learning.
+                  <a href="http://www.cs.berkeley.edu/~jordan/courses/294-fall09/lectures/optimization/slides.pdf">[slides]</a><br>
+
+                  ii. Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers.<br>
+                  Chapters 3, 8, and 10. Foundations and Trends in Machine Learning.
+                  <a href="http://www.stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf">[book]</a><br>
+                  <br>
+                  <b>Additional reading:</b><br>
+                  Convex Optimization. <a href="http://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf">http://www.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf</a><br>
+                  Companion lecture to ii. <a href="http://videolectures.net/nipsworkshops2011_boyd_multipliers/">http://videolectures.net/nipsworkshops2011_boyd_multipliers/</a><br>
+
+                  http://leon.bottou.org/publications/pdf/compstat-2010.pdf<br>
+                  http://alex.smola.org/teaching/cmu2013-10-701/slides/2_Recitation_Optimization.pdf<br>
+                  http://alex.smola.org/teaching/cmu2013-10-701/slides/3_Recitation_StochasticGradientDescent.pdf
+                  <hr>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top">13.</td>
+                <td>
+                  i. Communication-avoiding algorithms, Supercomputing 2012 tutorial.
+                  <a href="http://www.cs.berkeley.edu/~demmel/SC12_tutorial/Demmel_SC12_Tutorial_final.pdf">[slides]</a><br>
+                  
+                  ii. Randomized Regression in Parallel and Distributed Environments. GraphLab 2013 talk. <a href="http://www.cs.yale.edu/homes/mmahoney/talks/mahoney-graphlab13.pdf">[slides]</a><br><br>
+
+                  <b>Additional reading</b><br>
+                  Mining of Massive Datasets. Chapter 11.
+                  <a href="http://infolab.stanford.edu/~ullman/mmds.html">[link]</a><br>
+                  <hr>
+                </td>
+              </tr>
+
+              <!--
+              <tr>
+                <td valign="top">13.</td>
+                <td>
+                  i. Cloud Computing Driving Infrastructure Innovation
+                  <a href="http://mvdirona.com/jrh/talksAndPapers/JamesHamilton_IntelDCSGg.pdf">[slides]</a><br>
+
+                  ii. Power Management of Online Data-Intensive Services
+                  <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/37062.pdf">[slides]</a><br>
+                  <hr>
+                </td>
+              </tr>
+              -->
+
+            </table>
+
+
+            <h3><a name="signup">Signup form</a></h3>
+            <iframe src="https://docs.google.com/forms/d/1QCBcjyvXtBGkODMU1c47-D7hNXdv05CxhFJqRNXlg3k/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+
+          </div>
+        </div>
+
+      </div>
+      <br>
+      <div id="push"></div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; Yanif Ahmad, 2013.</p>
+      </div>
+    </div>
+
+
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
