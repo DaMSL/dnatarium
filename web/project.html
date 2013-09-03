@@ -63,9 +63,10 @@
             <div class="row-fluid">
               <div class="span10">
                 <hr>
-                <a href="#overview">Project Overview</a>&nbsp;|&nbsp;
-                <a href="#workload">Genomics Workloads</a>&nbsp;|&nbsp;
-                <a href="#areas">Areas</a>&nbsp;|&nbsp;
+                <a href="#overview">Overview</a>&nbsp;|&nbsp;
+                <a href="#start">Getting Started</a>&nbsp;|&nbsp;
+                <a href="#workload">Topics</a>&nbsp;|&nbsp;
+                <a href="#areas">Team Areas</a>&nbsp;|&nbsp;
                 <a href="#resources">Resources</a>&nbsp;|&nbsp;
                 <a href="#schedule">Schedule</a>
                 <hr>
@@ -117,7 +118,9 @@
             In the remainder of this page, we describe a simple toolchain to get us started with ingesting sequence data into a relational database. Course students should try to set this up for themselves as a small testing and sandbox environment for running sequence analysis. Students interested in designing the storage and architecture of our public database will refine this to meet the demands of scalability, and to use the best set of tools available for the scope of the project.
 
 
-            <h3>Dataset description</h3>
+            <h3><a name="start">Getting started</a></h3>
+
+            <h4>Dataset description</h4>
             We will provide as inputs a dataset of short reads as obtained from high-throughput DNA sequencers. The file format used is <a href="http://en.wikipedia.org/wiki/FASTQ_format">FASTQ</a>. FASTQ files are structured in blocks of 4 lines, containing both sequence information and metadata. Here is a snippet to illustrate its contents:<br><br>
 
 <pre>
@@ -128,8 +131,9 @@ NAACGTCAGCGGAAGCACCACTATCTGGCGATCAAAAGGATGGTCATCGGTCACGGTGACAGTACGGGTACCTGACGGCC
 </pre>
 
             A small 100MB sample of short reads can be found here: <span class="label label-info">TODO URL</span>
+            <br>
 
-            <h3>Schema design</h3>
+            <h4>Schema design</h4>
             The following database schema is a suggestion for a starting point for
             the design of a genomics database. This should be extended with further
             metadata, views (dervied tables), and indexes as needed to support our
@@ -160,7 +164,11 @@ create table Alignments (     create table Variants (
   extra     text              
 );              
 </pre>
-            <h3><a name="workload">Genomics workloads</a></h3>
+
+            <span class="label label-info">TODO: more info here, including python script, etc</span>
+            <br><br>
+
+            <h3><a name="workload">Genomics Topics and Workloads</a></h3>
             We'd like our genomics database and pipeline to support the following functionality. We anticipate that much of this functionality can be provided by existing tools or require modifications to existing tools. We strongly encourage you to make good use of such tools rather than developing your own algorithms from scratch except where necessary.
             <br><br>
 
@@ -291,10 +299,7 @@ create table Alignments (     create table Variants (
             -->
 
 
-            <!--
-              -- Project areas
-              -->
-            <h3><a name="areas">Project areas</a></h3>
+            <h3><a name="areas">Team Areas</a></h3>
 
             <h5>Data representation and storage</h5>
             <ul>
@@ -324,6 +329,7 @@ create table Alignments (     create table Variants (
               <li>Workload and benchmark design</li>
               <li>Visualization</li>
             </ul>
+            <br>
 
 
             <!--
@@ -347,7 +353,7 @@ create table Alignments (     create table Variants (
             <li>Virtualization software (VirtualBox)</li>
             </ul>
 
-            We're happy for you to install any open-source software on these machines. Note that a lot of commercial software is also available under non-commercial usage licensing (e.g., Oracle Database 11RG, etc). Please let the course instructor know if any software requires root access for installation, and we will work with you to set this up.<br>
+            We're happy for you to install any open-source software on these machines. Note that a lot of commercial software is also available under non-commercial usage licensing (e.g., Oracle Database 11RG, etc). Please let the course instructor know if any software requires root access for installation, and we will work with you to set this up.<br><br>
 
             <h3><a name="schedule">Schedule</a></h3>
 
